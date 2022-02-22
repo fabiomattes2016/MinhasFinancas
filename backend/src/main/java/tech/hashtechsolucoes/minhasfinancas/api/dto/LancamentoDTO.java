@@ -1,14 +1,14 @@
 package tech.hashtechsolucoes.minhasfinancas.api.dto;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigDecimal;
 
 @Getter
 @Setter
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class LancamentoDTO {
     private Long id;
     private String descricao;

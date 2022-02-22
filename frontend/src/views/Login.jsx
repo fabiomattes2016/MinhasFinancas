@@ -1,5 +1,6 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
+import axios from "axios";
 
 import Card from "../components/Card";
 import CardBody from "../components/CardBody";
@@ -9,12 +10,23 @@ class Login extends React.Component {
   state = {
     email: "",
     senha: "",
+    mensagemErro: null,
   };
 
   login = (e) => {
     e.preventDefault();
-    console.log("Email: ", this.state.email);
-    console.log("Senha: ", this.state.senha);
+
+    axios
+      .post("http://localhost:8080/api/usuarios/login", {
+        email: this.state.email,
+        senha: this.state.senha,
+      })
+      .then((res) => {
+        this.props.history.push("/home");
+      })
+      .catch((err) => {
+        this.setState({ mensagemErro: err.response.data });
+      });
   };
 
   prepareCadastrar = () => {
@@ -32,10 +44,16 @@ class Login extends React.Component {
             <form>
               <Card title="Login">
                 <CardBody>
+                  <div className="row text-center">
+                    <span className="text-danger">
+                      {this.state.mensagemErro}
+                    </span>
+                  </div>
                   <div className="form-group">
                     <div className="form-group">
                       <label htmlFor="email">E-mail: *</label>
                       <input
+                        type="email"
                         id="email"
                         name="email"
                         placeholder="Digite seu e-mail."
@@ -49,6 +67,7 @@ class Login extends React.Component {
                     <div className="form-group">
                       <label htmlFor="senha">Senha: *</label>
                       <input
+                        type="password"
                         id="senha"
                         name="senha"
                         placeholder="Digite a sua senha."
