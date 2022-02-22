@@ -4,6 +4,7 @@ import { Route, Switch, HashRouter } from "react-router-dom";
 
 import Login from "../views/Login";
 import Cadastro from "../views/Cadastro";
+import Home from "../views/Home";
 
 function Routes() {
   return (
@@ -11,6 +12,7 @@ function Routes() {
       <Switch>
         <Route path="/login" component={Login} />
         <Route path="/cadastro" component={Cadastro} />
+        <Route path="/home" component={Home} />
       </Switch>
     </HashRouter>
   );

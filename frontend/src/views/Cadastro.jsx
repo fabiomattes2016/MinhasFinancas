@@ -18,8 +18,8 @@ class Cadastro extends React.Component {
     console.log(this.state);
   };
 
-  preparLogin = () => {
-    this.props.history.push("/login");
+  preparHome = () => {
+    this.props.history.push("/home");
   };
 
   render() {
@@ -88,7 +88,7 @@ class Cadastro extends React.Component {
             <button
               type="button"
               className="btn btn-danger m-1"
-              onClick={this.preparLogin}
+              onClick={this.preparHome}
             >
               Voltar
             </button>
