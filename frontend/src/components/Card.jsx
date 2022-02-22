@@ -4,7 +4,7 @@ class Card extends React.Component {
   render() {
     return (
       <div className="card mb-3">
-        <h3 className="card-header">{this.props.title}</h3>
+        <h4 className="card-header text-center">{this.props.title}</h4>
         {this.props.children}
       </div>
     );
