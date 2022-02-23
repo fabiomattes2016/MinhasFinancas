@@ -1,6 +1,8 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
-import axios from "axios";
+
+import UsuarioService from "../app/services/usuarioService";
+import LocalStorageService from "../app/services/localStorageService";
 
 import Card from "../components/Card";
 import CardBody from "../components/CardBody";
@@ -13,15 +15,22 @@ class Login extends React.Component {
     mensagemErro: null,
   };
 
-  login = (e) => {
+  constructor() {
+    super();
+    this.service = new UsuarioService();
+  }
+
+  login = async (e) => {
     e.preventDefault();
 
-    axios
-      .post("http://localhost:8080/api/usuarios/login", {
+    this.service
+      .autenticar({
         email: this.state.email,
         senha: this.state.senha,
       })
       .then((res) => {
+        let usuario = res.data;
+        LocalStorageService.addItem("_usuario_logado", usuario.id);
         this.props.history.push("/home");
       })
       .catch((err) => {

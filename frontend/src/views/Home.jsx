@@ -1,10 +1,35 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 
+import UsuarioService from "../app/services/usuarioService";
+import LocalStorageService from "../app/services/localStorageService";
+
 class Home extends React.Component {
   state = {
     saldo: 0,
   };
+
+  constructor() {
+    super();
+    this.service = new UsuarioService();
+  }
+
+  componentDidMount() {
+    let usuario = LocalStorageService.obterItem("_usuario_logado");
+
+    this.service
+      .saldo(usuario.usuarioId)
+      .then((res) => {
+        let formatado = res.data.toLocaleString("pt-br", {
+          style: "currency",
+          currency: "BRL",
+        });
+        this.setState({ saldo: formatado });
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+      });
+  }
 
   prepararCadastro = () => {
     this.props.history.push("/cadastro");
@@ -16,7 +41,7 @@ class Home extends React.Component {
         <h1 className="display-3">Bem vindo!</h1>
         <p className="lead">Esse é seu sistema de finanças.</p>
         <p className="lead">
-          Seu saldo para o mês atual é de R$ {this.state.saldo}
+          Seu saldo para o mês atual é de {this.state.saldo}
         </p>
         <hr className="my-4" />
         <p>
